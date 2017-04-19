@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product id="111" name="Apple" quantity="1" unitPrice="1.99"/>
+
+    <product id="222" name="Cherry" quantity="1" unitPrice="2.99"/>
+
+    <product id="333" name="Melon" quantity="1" unitPrice="3.99"/>
+</products>
