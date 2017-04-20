@@ -53,9 +53,7 @@ public class ProductService {
     }
 
     public Product setProductByUserQuantity(Product productByProductCode, String userQuantity) {
-        if (userQuantity == null || userQuantity.equals("")) {
-            productByProductCode.setQuantity(1);
-        } else {
+        if (Validation.validateUserQuantity(userQuantity)) {
             productByProductCode.setQuantity(Integer.parseInt(userQuantity));
         }
         return productByProductCode;

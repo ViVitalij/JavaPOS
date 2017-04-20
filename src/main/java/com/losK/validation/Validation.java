@@ -12,11 +12,16 @@ import java.util.List;
  */
 public class Validation {
 
-    private static final String ALERT_INVALID_CODE = "Invalid bar-code";
-    private static final String ALERT_NO_PRODUCT = "Product not found";
+    private static final String INVALID_BAR_CODE = "Invalid bar-code";
+    private static final String PRODUCT_NOT_FOUND = "Product not found";
+    private static final String POSITIVE_NUMBERS_ONLY = "Incorrect amount has been changed to one";
 
     protected static void showErrorAlert(String message) {
         showAlert(Alert.AlertType.ERROR, message);
+    }
+
+    protected static void showInformationAlert(String message) {
+        showAlert(Alert.AlertType.INFORMATION, message);
     }
 
     private static void showAlert(Alert.AlertType alertType, String message) {
@@ -28,9 +33,19 @@ public class Validation {
         if (isProductInDatabase(productCode)) {
             flag = true;
         } else if (productCode.equals("")) {
-            showErrorAlert(ALERT_INVALID_CODE);
+            showErrorAlert(INVALID_BAR_CODE);
         } else {
-            showErrorAlert(ALERT_NO_PRODUCT);
+            showErrorAlert(PRODUCT_NOT_FOUND);
+        }
+        return flag;
+    }
+
+    public static boolean validateUserQuantity(String userQuantity) {
+        boolean flag = false;
+        if (userQuantity.matches("^[1-9]\\d*$")) {
+            flag = true;
+        } else {
+            showInformationAlert(POSITIVE_NUMBERS_ONLY);
         }
         return flag;
     }
