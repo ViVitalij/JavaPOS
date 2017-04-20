@@ -1,8 +1,8 @@
 package com.losK.controller;
 
 import com.losK.model.Product;
-import com.losK.service.BillService;
 import com.losK.service.ProductService;
+import com.losK.service.ReceiptService;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,17 +63,17 @@ public class ScanController extends Controller {
             ObservableList<Product> listOfProducts = tableViewProducts.getItems();
             listOfProducts.add(productByProductCode);
             Double fullNewProductPrice = productService.getFullProductPrice(productByProductCode);
-            refreshBillPrice(fullNewProductPrice);
+            refreshReceiptPrice(fullNewProductPrice);
         }
     }
 
-    private void refreshBillPrice(Double fullProductPrice) {
+    private void refreshReceiptPrice(Double fullProductPrice) {
         if (sumTextField.getText().equals("")) {
             sumTextField.setText(String.valueOf(fullProductPrice));
         } else {
-            Double oldPriceToPay = Double.parseDouble(sumTextField.getText());
-            Double newPriceToPay = oldPriceToPay + fullProductPrice;
-            sumTextField.setText(String.format(Locale.US, "%.2f", newPriceToPay));
+            Double oldAmountToPay = Double.parseDouble(sumTextField.getText());
+            Double newAmountToPay = oldAmountToPay + fullProductPrice;
+            sumTextField.setText(String.format(Locale.US, "%.2f", newAmountToPay));
         }
 
     }
@@ -108,20 +108,24 @@ public class ScanController extends Controller {
         sumTextField.setText("");
     }
 
-    private final String SUMMARY = "Thank you for shopping with us!\n\n Please, take the bill";
+    private final String SUMMARY = "Thank you for shopping with us!\n\n Please, take the receipt";
 
     @FXML
     void cashOnAction(ActionEvent event) {
+        makeSummary();
+    }
+
+    private void makeSummary() {
         switchToSummaryPane();
         showSummary();
-        BillService.printBill();
+        String receiptList = tableViewProducts.getItems().toString();
+        String amountToPay = sumTextField.getText();
+        ReceiptService.printReceipt(receiptList, amountToPay);
     }
 
     @FXML
     void cardOnAction(ActionEvent event) {
-        switchToSummaryPane();
-        showSummary();
-        BillService.printBill();
+        makeSummary();
     }
 
     void switchToSummaryPane() {

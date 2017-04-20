@@ -14,7 +14,7 @@ public class Validation {
 
     private static final String INVALID_BAR_CODE = "Invalid bar-code";
     private static final String PRODUCT_NOT_FOUND = "Product not found";
-    private static final String POSITIVE_NUMBERS_ONLY = "Incorrect amount has been changed to one";
+    private static final String POSITIVE_NUMBERS_ONLY = "Incorrect quantity has been changed";
 
     protected static void showErrorAlert(String message) {
         showAlert(Alert.AlertType.ERROR, message);
